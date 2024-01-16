@@ -1,0 +1,162 @@
+
+<!DOCTYPE HTML>
+<html lang="en" data-bs-theme="light">
+<head>
+
+
+  <meta charset="utf-8">
+  <!-- <meta http-equiv="pragma" content="no-cache" /> -->
+  <meta http-equiv="cache-control" content="max-age=259200" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>{{judul_halaman}}</title>
+  <meta name="theme-color" content="{{warna_utama}}"/>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" type="text/javascript"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.min.js" type="text/javascript"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+
+  <link rel="icon" href="{{icon_aplikasi}}" type="image/png" >
+
+
+
+</head>
+<header class="bg-success bg-gradient">
+
+  <section>
+    <div class="container ">
+      <div style="padding-top:30px;padding-bottom:20px">
+        <div class="row d-flex align-items-center">
+
+          <div class="col-12 col-md-2 col-sm-12 py-3">
+            <a href="/"  class="text-decoration-none" style="color:white">
+              <h3 class="navbar-brand m-0" style="font-size: 1.57rem;">{{nama_toko}}</h3>
+            </a>
+          </div>
+          <div class="col-12 col-md-7 py-3">
+            <form action="/search" class="search" method="GET">
+              <div class="input-group w-100">
+                <input type="search" class="form-control" id="form-cari" maxlength="150" name="q" placeholder="{{teks_cari}}">
+
+                <button class="btn rounded-end" type="submit" style="background-color:#ffffffcf;border:1px solid #ced4da;">
+                  <i class="fa fa-search primarycolor"></i>
+                </button>
+
+              </div>
+            </form>
+          </div>
+
+          <div class="col-7 col-md-3 order-1 order-md-0 py-3">
+
+            <div class="d-flex flex-row justify-content-evenly mb-3" id="user-data">
+              <div class="d-flex flex-column ms-4 ps-3">
+                <small class="text-white">Selamat Datang!</small>
+                <div class="d-none" id="belum_login">
+                  <a class="btn btn-sm btn-outline-primary border border-white text-white" href="/akun/login">&nbsp; Login &nbsp;</a>  <span class="text-white pe-2 ps-2">|</span>
+                  <a class="btn btn-sm btn-outline-primary border border-white text-white" href="/akun/daftar">&nbsp; Daftar &nbsp;</a>
+                </div>
+                <b class="text-white" id="nama_user"></b>
+              </div>
+              <div class="d-flex flex-row flex-fill justify-content-evenly align-items-center d-none" id="logo_member">
+                <a href="/akun/?page=profil" ><i class="fa fa-user text-white fs-3"></i></a>
+                <a href="/akun/?page=cart" class="position-relative">
+                  <i class="fa fa-shopping-cart text-white fs-3"></i>
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="total_cart">0</span>
+                </a>
+              </div>
+            </div>
+
+
+          </div>
+
+          <div class="col">
+            <nav class="navbar navbar-expand-lg navbar-dark">
+              <div class="container-fluid">
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                  <ul class="navbar-nav mt-4 mt-md-0">
+                    <li class="nav-item">
+                      <a class="nav-link" href="/" id="nav_home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="/kategori" id="nav_kategori">Kategori</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="/pages?voucher" id="nav_voucher">Promo &amp; Voucher</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="/pages?informasi" id="nav_informasi">Informasi</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="/pages?kontak" id="nav_kontak">Kontak</a>
+                    </li>
+                  </ul>
+
+                </div>
+              </div>
+            </nav>
+          </div>
+
+
+        </div>
+      </div>
+
+    </div>
+    <div class="container" id="pesan_status">
+
+
+    </div>
+  </section>
+
+</header>
+<script>
+
+$(document).ready(function() {
+   const data_akun={{data_json_akun}};
+   if(data_akun.status=="ok"){
+       console.log(data_akun);
+       $("#nama_user").text(data_akun.data.nama_user);
+       $("#logo_member").removeClass("d-none");
+       $("#user-data").removeClass("mb-3");
+       $("#user-data").addClass("mb-1");
+       $("#total_cart").text(data_akun.data.total_cart);
+    }else{
+      $("#belum_login").removeClass("d-none");
+    }
+    const data_status={{data_json_status}};
+    if(data_status.status!="no_data"){
+      let alert_status;
+      let url_svg;
+      if(data_status.status=="sukses"){
+        alert_status="alert-success";
+        url_svg="https://storage3.bukaolshop.com/other_image/check-circle-svgrepo-com.svg";
+      }else if(data_status.status=="info"){
+        alert_status="alert-info";
+        url_svg="https://storage3.bukaolshop.com/other_image/warning-circle-svgrepo-com.svg";
+      }else{
+        alert_status="alert-warning";
+        url_svg="https://storage3.bukaolshop.com/other_image/warning-circle-svgrepo-com.svg";
+      }
+      $("#pesan_status").addClass("pb-4");
+      $("#pesan_status").html(`<div class="alert `+alert_status+` d-flex  alert-dismissible fade show" role="alert">
+      <svg width="50" height="50">
+       <image xlink:href="`+url_svg+`" width="50" height="50"/></svg>
+      <div class="d-flex flex-column ms-2">
+        <strong>`+data_status.judul+`</strong>`+data_status.pesan+`
+      </div>
+
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>`);
+    }
+
+
+ });
+</script>
+
+<body>

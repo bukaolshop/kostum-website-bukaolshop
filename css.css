@@ -1,0 +1,125 @@
+:root{
+  --bo-warna-utama:{{warna_utama}};
+  --bo-warna-gelap:{{warna_gelap}};
+  --bo-warna-terang:{{warna_terang}};
+  --bs-success-rgb:{{warna_utama_rgb}};
+  --bs-primary-rgb:{{warna_utama_rgb}};
+  --bs-secondary-rgb:{{warna_gelap_rgb}};
+  --bs-link-color-rgb:{{warna_utama_rgb}};
+}
+.list-group{
+    --bs-list-group-active-bg: var(--bo-warna-utama);
+    --bs-list-group-active-border-color:var(--bo-warna-utama);
+}
+
+.btn-primary {
+    --bs-btn-bg: var(--bo-warna-utama);
+    --bs-btn-border-color: var(--bo-warna-utama);
+    --bs-btn-hover-bg: var(--bo-warna-gelap);
+    --bs-btn-hover-border-color: var(--bo-warna-gelap);
+    --bs-btn-active-bg:var(--bo-warna-terang);
+    --bs-btn-active-border-color:var(--bo-warna-terang);
+}
+
+.btn-outline-primary{
+  --bs-btn-color:var(--bo-warna-utama);
+  --bs-btn-border-color:var(--bo-warna-utama);
+  --bs-btn-hover-bg:var(--bo-warna-utama);
+  --bs-btn-hover-border-color:var(--bo-warna-utama);
+  --bs-btn-active-bg:var(--bo-warna-utama);
+  --bs-btn-active-border-color:var(--bo-warna-utama);
+}
+
+.card-banner {
+    display: flex;
+    position: relative;
+    overflow: hidden;
+    background-color: #fff;
+    background-size: cover;
+    background-position: center center;
+    border-radius: 0.37rem;
+}
+.card-banner .card-body {
+    background-size: cover;
+    position: relative;
+    z-index: 10;
+}
+
+@media only screen and (max-width: 480px)
+.card-responsive {
+    height: 86px;
+    background-color: #301B6F;
+}
+.card-responsive {
+    height: 150px;
+    background-color: #301B6F;
+}
+
+@media only screen and (max-width: 480px){
+  .card-responsive {
+      height: 86px;
+      background-color: #301B6F;
+  }
+  .card-banner .text-bottom {
+      padding: 6px 10px !important;
+      padding-top: 30px;
+      background: linear-gradient(to bottom, rgb(0 0 0 / 17%) 0%, rgba(0, 0, 0, 0.8) 100%);
+      bottom: -7px;
+  }
+}
+
+
+
+.card-banner .text-bottom {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 10;
+    width: 100%;
+    padding: 7px 20px;
+    padding-top: 30px;
+    border-radius: 0 0 0.37rem 0.37rem;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.8) 100%);
+    color: #fff;
+}
+
+.judul-produk{
+  color: var(--bs-dark-text);
+font-size: 0.82rem;
+line-height: 1.2;
+max-width: 100%;
+max-height: 100%;
+white-space: pre-wrap;
+word-break: keep-all;
+text-overflow: ellipsis;
+overflow: hidden;
+margin-bottom: 4px;
+min-height: 16px;
+display: -webkit-box;
+-webkit-line-clamp: 3;
+-webkit-box-orient: vertical;
+}
+
+.discount {
+    -webkit-box-pack: center;
+    justify-content: center;
+    padding: 4px;
+    font-size: 0.714286rem;
+    font-weight: bold;
+    border-radius: 3px;
+    margin: 0px 4px 0px 0px;
+    -webkit-box-align: center;
+    align-items: center;
+    flex: 0 0 30px;
+    height: 20px;
+    color: #df5151;
+    background-color: #ffd2db;
+}
+.list_produk:hover{
+  background: #d6d6d630;
+}
+
+.lebar-150{
+  width: 150px;
+}

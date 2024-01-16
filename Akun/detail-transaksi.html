@@ -1,0 +1,251 @@
+<section>
+  <div class="container">
+    <div class="row mt-4">
+      <div class="col-12 col-md-4 col-lg-4">
+        <div class="list-group mb-4">
+          <a href="?page=profil" class="list-group-item list-group-item-action" aria-current="true">
+            Profil
+          </a>
+          <a href="?page=transaksi" class="list-group-item list-group-item-action active">Transaksi</a>
+          <a href="?page=alamat" class="list-group-item list-group-item-action">Alamat Saya</a>
+          <a href="?page=favorit" class="list-group-item list-group-item-action">Favorit</a>
+          <a href="?page=logout" class="list-group-item list-group-item-action "><span class="fa fa-power-off"></span>  Logout </a>
+        </div>
+      </div>
+
+      <div class="col-md-8 col-lg-8 col-12">
+        <article class="card mb-4">
+          <header class="card-header"> Detail Transaksi </header>
+
+          <div class="card-body">
+            <h6 id="nomor_pembayaran" class="mt-2">Nomor Transaksi: </h6>
+
+            <a href="" class="d-none" id="link_payment"><button class="btn btn-primary mb-4">Bayar Pesanan / Konfirmasi Pembayaran</button></a>
+
+            <article class="card mt-4">
+              <div class="card-body row no-gutters">
+                <div class="col-md-3 col-lg-3 col-12 mb-3 mb-md-0">
+                  <strong>Terakhir update:</strong> <p id="tanggal_transaksi"></p>
+                </div>
+                <div class="col-md-3 col-lg-3 col-12 mb-3 mb-md-0">
+                  <strong>Status Pembayaran:</strong>
+                  <p id="status_bayar" class="text-success text-uppercase"></p>
+                </div>
+                <div class="col-md-3 col-lg-3 col-12 mb-3 mb-md-0">
+                  <strong>Status Pengiriman:</strong>
+                  <p id="status_kirim" class="text-success text-uppercase"></p>
+                </div>
+                <div class="col-md-3 col-lg-3 col-12">
+                  <strong>Metode Pembayaran:</strong>
+                  <p id="metode_bayar"></p>
+                </div>
+              </div>
+            </article>
+            <article class="card mt-4">
+              <div class="card-body row no-gutters">
+
+                <div class="col-md-12 col-12">
+                  <h5>Produk</h5>
+                  <div class="col-12 mb-4" id="list_produk">
+
+                  </div>
+
+
+                </div>
+              </article>
+              <div class="row">
+                <div class="col-md-6">
+                  <article class="card mt-4">
+                    <div class="card-body row no-gutters">
+                      <div class="col-md-12 col-12">
+                        <h5>Informasi Pengiriman</h5>
+                      </div>
+
+                      <dl class="mb-4 d-flex flex-column" id="alamat">
+                        <dt class="text-muted lebar-150">Alamat :</dt>
+
+                      </dl>
+                      <dl class="mb-0 d-flex">
+                        <dt class="text-muted lebar-150">Nama :</dt>
+                        <dd id="nama_penerima"></dd>
+                      </dl>
+                      <dl class="mb-0 d-flex">
+                        <dt class="text-muted lebar-150">No HP :</dt>
+                        <dd id="no_penerima"></dd>
+                      </dl>
+
+
+                    </div>
+                  </article>
+                </div>
+                <div class="col-md-6 d-flex">
+                  <article class="card mt-4 flex-fill">
+                    <div class="card-body row no-gutters ">
+                      <div class="col-md-12 col-12 fw-normal">
+
+                        <h5 >Informasi Belanja</h5>
+                        <dl class="d-flex m-0">
+                          <dt class="text-muted lebar-150">Belanja :</dt>
+                          <dd id="total_belanja"></dd>
+                        </dl>
+
+                        <dl class="d-flex m-0">
+                          <dt class="text-muted lebar-150">Ongkir :</dt>
+                          <dd id="total_ongkir"></dd>
+                        </dl>
+
+                        <dl class="d-flex d-none m-0 total_membership_class">
+                          <dt class="text-muted lebar-150">Membership :</dt>
+                          <dd id="total_membership"></dd>
+                        </dl>
+
+                        <dl class="d-flex m-0">
+                          <dt class="text-muted lebar-150">Potongan :</dt>
+                          <dd id="total_potongan"></dd>
+                        </dl>
+                        <hr>
+                        <dl class="d-flex">
+                          <dt class="lebar-150">Total Transaksi:</dt>
+                          <dd><strong class="text-primary" id="total_transaksi"></strong></dd>
+                        </dl>
+
+
+                      </div>
+
+                    </div>
+                  </article>
+                </div>
+              </div>
+
+            </div> <!-- card-body.// -->
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script type="text/javascript">
+    $( document ).ready(function() {
+      // const alert_info={{data_json_status}};
+      // if(alert_info.status=="sukses"){
+        //   $('#alert').html('<div class="alert alert-success" role="alert"><h4 class="alert-heading">'+alert_info.judul+'</h4><p>'+alert_info.pesan+'</p></div>');
+        // }
+
+        const data_transaksi={{data_json_detail_transaksi}};
+        if(data_transaksi.status=="ok" && data_transaksi.data){
+          console.log(data_transaksi);
+          $('#nomor_pembayaran').append('#'+data_transaksi.data.nomor_pembayaran);
+          $('#tanggal_transaksi').text(data_transaksi.data.terakhir_update);
+          $('#status_bayar').text(data_transaksi.data.status_bayar);
+          $('#status_kirim').text(data_transaksi.data.status_pengiriman);
+          $('#metode_bayar').text(data_transaksi.data.bank_penerima);
+          if(data_transaksi.data.alamat_penerima.status_alamat=="ok"){
+            $('#alamat').append('<dd class="mb-0">'+data_transaksi.data.alamat_penerima.alamat_lengkap+'</dd><dd>Provinsi '+data_transaksi.data.alamat_penerima.provinsi+', kecamatan '+data_transaksi.data.alamat_penerima.kecamatan+', '+data_transaksi.data.alamat_penerima.kota+'</dd>');
+            $('#nama_penerima').text(data_transaksi.data.alamat_penerima.nama_penerima);
+            $('#no_penerima').text(data_transaksi.data.alamat_penerima.nomor_telepon);
+          }
+          $('#total_belanja').text(formatRupiah(data_transaksi.data.total_belanja));
+          $('#total_ongkir').text(formatRupiah(data_transaksi.data.total_ongkir));
+          if(data_transaksi.data.total_membership>0){
+            $('.total_membership_class').removeClass("d-none");
+            $('#total_membership').text(formatRupiah(data_transaksi.data.total_membership));
+          }
+
+          $('#total_potongan').text(formatRupiah(data_transaksi.data.potongan));
+          $('#total_transaksi').text(formatRupiah(data_transaksi.data.total_transaksi));
+
+          if(data_transaksi.data.data_pesanan && data_transaksi.data.data_pesanan.length>0){
+            data_transaksi.data.data_pesanan.forEach((list_data_pesanan) => {
+              $("#list_produk").append(htmlListEkspedisi(list_data_pesanan));
+            });
+          }
+          if(data_transaksi.data.url_payment){
+            $('#link_payment').attr('href', data_transaksi.data.url_payment).removeClass("d-none");
+          }
+
+        }
+
+      });
+      function htmlListEkspedisi(object) {
+        let ekspedisi=object.provinsi!="PRODUK DIGITAL"?"Produk ini dikirim dari "+object.provinsi+", "+object.kota+",  kec."+object.kecamatan:"Produk Digital";
+
+        let list_produk= `<div class="card mb-4">
+          <header class="card-header"> `+ekspedisi+` </header>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-9 col-lg-9 col-12">
+                <div class="row">`;
+
+                  object.data_produk.forEach((object_data_produk) => {
+                    list_produk+=htmlListProdukTransaksi(object_data_produk);
+                  });
+
+
+
+
+                  list_produk+=`
+                </div>
+              </div>
+              <div class="col-md-3 col-lg-3 col-12 mt-4 mt-md-0"  style="border-left:2px solid ">
+                <label><small>Ongkos Kirim</small></label>
+
+                <p class="mb-1"><strong>`+object.ekspedisi+`</strong></p>
+                <p>`+formatRupiah(object.ongkos_kirim)+`</p>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>`;
+      return list_produk;
+    }
+    function htmlListProdukTransaksi(object_data_produk) {
+      let varian="";
+
+      if(object_data_produk.nama_varian){
+        varian+="Varian : "+object_data_produk.nama_varian;
+        if(object_data_produk.opsi_varian){
+          varian+=" ("+object_data_produk.opsi_varian+")";
+        }
+      }
+      if(object_data_produk.ukuran){
+        varian+="Ukuran : "+object_data_produk.ukuran+".<br>";
+      }
+      if(object_data_produk.warna){
+        varian+="Warna : "+object_data_produk.warna+".";
+      }
+      if(varian!=""){
+        varian=`<p class="text-secondary-emphasis mt-1 mb-2">`+varian+`</p>`;
+      }
+
+      let produk=`<div class="col-12 mb-3 ">
+        <figure class="d-flex ">
+          <div class="aside">
+            <img src="`+object_data_produk.url_gambar_barang+`" class="img-fluid border img-sm" style="width:80px">
+          </div>
+          <figcaption class="ps-3 ">
+            <span class="text-primary fw-bolder">`+object_data_produk.nama_barang+`</span>
+            `+varian+`
+            <div style="font-size:9.5pt">
+              <span>Qty : `+object_data_produk.jumlah_barang+`</span>
+              <br>
+              <span>sub total : `+formatRupiah(object_data_produk.total_harga)+`</span>
+              `;
+              if(object_data_produk.catatan!=""){
+                produk+=`<p class="mt-2"> Catatan : `+object_data_produk.catatan+`</p>`;
+              }
+              produk+=`</div></figcaption></figure>`;
+              if(object_data_produk.nomor_resi!=""){
+                produk+=`<div class="mt-2">
+                  <div class="card">
+                    <div class="card-body">
+                      <i class="fa fa-receipt"></i><strong class="text text-success text-break ms-4"> `+object_data_produk.nomor_resi+` </strong>
+                    </div>
+                  </div>
+                </div>`;
+              }
+              produk+=`</div>`;
+              return produk;
+            }
+          </script>

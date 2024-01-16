@@ -1,0 +1,44 @@
+<section>
+  <div class="container">
+    <div class="row justify-content-md-center">
+      <div class="col-md-8">
+        <div class="row" id="list_kontak">
+
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+
+</section>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    const data_kontak={{data_list_kontak}};
+
+    if(data_kontak.status=="ok"){
+      for(var object_data in data_kontak.data) {
+        $( "#list_kontak").append(htmlListKontak(data_kontak.data[object_data]));
+      }
+    }$("#nav_kontak").addClass(activeClass());
+    function htmlListKontak(object) {
+      return `<div class="col-md-6">
+        <div class="card mb-3">
+          <div class="row no-gutters">
+            <div class="col-md-4 col-3" style="padding:20px" id="second">
+              <img src="https://api.bukaolshop.com/admin/images/kontak/10.png" class="card-img gambar_kontak"></div>
+              <div class="col-md-8 col-9" id="first">
+                <div class="card-body justify-content-md-center" style="padding-top:22px">
+                  <h5 class="card-title teks-primary">`+object.sosial_media+`</h5>
+                  <p class="card-text"><small class="text-muted">`+object.caption+`</small></p>
+                  <p class="card-text teks-primary">`+object.tujuan+`</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>`;
+      }
+    });
+
+  </script>

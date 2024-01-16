@@ -1,0 +1,74 @@
+<section>
+  <div class="container">
+    <div class="row mt-4">
+      <div class="col-12">
+
+        <div class="row">
+          <nav class="col-md-12">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="/">Home</a></li>
+              <li class="breadcrumb-item"><a href="https://olshopgue.bukaolshop.site/kategori/">Kategori</a></li>
+            </ol>
+          </nav>
+        </div>
+
+
+      </div>
+    </div>
+    <div class="row" id="list_detail_search">
+    </div>
+
+    <div class="row">
+    <div class="col-12">
+    <div class="d-flex ">
+       <div class="p-2 bd-highlight">
+         <a href="" id="link_back_page">
+           <button type="button" class="btn btn-primary"><i class="fa-solid fa-circle-chevron-left"></i> Halaman Sebelumnya</button>
+         </a>
+       </div>
+        <div class="ms-auto p-2">
+        <a href="" id="link_next_page">
+          <button type="button" class="btn btn-primary">Halaman Selanjutnya <i class="fa-solid fa-circle-chevron-right"></i></button>
+        </a>
+      </div>
+    </div>
+    </div>
+    </div>
+  </div>
+
+</section>
+
+<script type="text/javascript">
+$(document).ready(function() {
+  $("#form-cari").val('{{query_string}}');
+  const list_produk={{data_list_search}};
+
+  if(list_produk.status=="ok"){
+
+    for(var object_data in list_produk.data) {
+
+      $( "#list_detail_search").append(htmlListProduk(list_produk.data[object_data]));
+    }
+    if(list_produk.hasOwnProperty("next_page_url")){
+      if(list_produk.data.length<18){
+        $("#link_next_page").hide();
+      }else{
+        $("#link_next_page").attr("href", list_produk.next_page_url)
+      }
+    }
+    if(list_produk.hasOwnProperty("back_page_url")){
+      $("#link_back_page").attr("href", list_produk.back_page_url)
+    }else{
+      $("#link_back_page").hide();
+    }
+  }else{
+
+      $("#link_back_page").hide();
+      $("#link_next_page").hide();
+      $( "#list_home_produk").append("<h2>Produk tidak ditemukan</h2>");
+
+  }
+
+
+});
+</script>

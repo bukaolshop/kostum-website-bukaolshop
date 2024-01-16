@@ -1,0 +1,53 @@
+<section>
+  <div class="container">
+    <div class="row mt-4">
+      <div class="col-12">
+
+        <div class="row">
+          <nav class="col-md-12">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="/">Home</a></li>
+              <li class="breadcrumb-item"><a href="https://olshopgue.bukaolshop.site/kategori/">Kategori</a></li>
+            </ol>
+          </nav>
+        </div>
+
+
+      </div>
+    </div>
+    <div class="row" id="list_kategori">
+
+
+    </div>
+  </div>
+
+</section>
+
+<script type="text/javascript">
+$(document).ready(function() {
+
+  const data_kategori=JSON.parse('{{data_json_list_kategori}}');
+
+  if(data_kategori.status=="ok"){
+      console.log(data_kategori);
+    for(var object_data in data_kategori.data) {
+      if(data_kategori.data[object_data]['gambar_kategori']==""){
+        data_kategori.data[object_data]['gambar_kategori']="https://inspektorat.palembang.go.id/assets/img/no-image.png";
+      }
+      $( "#list_kategori").append(htmlListKategori(data_kategori.data[object_data])); $("#nav_kategori").addClass(activeClass());
+    }
+  }
+
+  function htmlListKategori(object) {
+    return `
+    <div class="col-6 col-md-3 mb-2">
+      <a href="`+object.url_kategori+`">
+        <div class="card-banner">
+          <div class="card-body card-responsive" style="background-image: url('`+object.gambar_kategori+`') !important;"> </div>
+          <div class="text-bottom"><h5>`+object.nama_kategori+`</h5></div>
+      </div>
+      </a>
+    </div>`;
+  }
+});
+</script>

@@ -1,0 +1,85 @@
+<section>
+  <div class="container">
+    <div class="row mt-4">
+      <div class="col-12 col-md-4 col-lg-4">
+        <div class="list-group mb-4">
+          <a href="?page=profil" class="list-group-item list-group-item-action active" aria-current="true">
+            Profil
+          </a>
+          <a href="?page=transaksi" class="list-group-item list-group-item-action">Transaksi</a>
+          <a href="?page=alamat" class="list-group-item list-group-item-action">Alamat Saya</a>
+          <a href="?page=favorit" class="list-group-item list-group-item-action">Favorit</a>
+          <a href="?page=logout" class="list-group-item list-group-item-action "><span class="fa fa-power-off"></span>  Logout </a>
+        </div>
+      </div>
+      <div class="col-md-8 col-lg-8 col-12 ">
+
+        <article class="card mb-3">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-12">
+                <div class="d-flex bd-highlight flex-wrap">
+                  <div class="p-2">
+                    <img class="rounded-circle img-md border" style="width:140px;height:140px" src="{{link_foto_profil}}">
+                  </div>
+                  <div class="p-2 flex-grow-1 mb-0">
+                    <p class="mb-0">Selamat datang!</p>
+                    <p class="mb-0" style="font-size:17pt;font-weight:bold"> {{nama_user}} </p>
+                    <p>{{email_user}}</p>
+                    <a href="?page=editprofil" class="btn btn-outline-primary btn-sm mt-1">Edit</a>
+                  </div>
+                  <div class="p-2 flex-grow-1">
+
+                      <div class="card bg-success bg-gradient  border-0">
+                        <div class="text-white p-3 ">
+                          <h5 class="card-title mb-0">{{nama_saldo}}</h5>
+                          <p class="card-text" id="jumlah_saldo"></p>
+                          <a href="/akun/?page=topup" class="btn btn-sm btn-light float-end"> TopUp </a>
+                        </div>
+                      </div>
+
+                  </div>
+                </div>
+
+
+              </div>
+
+              <div class="col-12">
+                  <hr>
+                <article class="card-group">
+                  <figure class="card bg">
+                    <div class="p-3">
+                      <b>Tagihan</b>
+                      <h4 class="card-title primarycolor mb-0">98</h4>
+                    </div>
+                  </figure>
+                  <figure class="card bg">
+                    <div class="p-3">
+                      <b>Diproses</b>
+                      <h4 class="card-title primarycolor mb-0">39</h4>
+                    </div>
+                  </figure>
+                  <figure class="card bg">
+                    <div class="p-3">
+                      <b>Selesai</b>
+                      <h4 class="card-title primarycolor mb-0">58</h4>
+
+                    </div>
+                  </figure>
+
+                </article>
+              </div>
+            </div>
+
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+$(document).ready(function() {
+  $("#jumlah_saldo").html(formatRupiah("{{jumlah_saldo}}"));
+});
+</script>

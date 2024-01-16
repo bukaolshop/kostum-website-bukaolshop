@@ -1,0 +1,207 @@
+<section>
+  <div class="container">
+    <div class="row mt-4">
+      <div class="col-12 col-md-4 col-lg-4">
+        <div class="list-group mb-4">
+          <a href="?page=profil" class="list-group-item list-group-item-action" aria-current="true">
+            Profil
+          </a>
+          <a href="?page=transaksi" class="list-group-item list-group-item-action active">Transaksi</a>
+          <a href="?page=alamat" class="list-group-item list-group-item-action">Alamat Saya</a>
+          <a href="?page=favorit" class="list-group-item list-group-item-action">Favorit</a>
+          <a href="?page=logout" class="list-group-item list-group-item-action "><span class="fa fa-power-off"></span>  Logout </a>
+        </div>
+      </div>
+      <div class="col-md-8 col-lg-8 col-12 ">
+
+        <article class="card mb-3">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-12 p-4" id="data_payment">
+
+              </div>
+
+            </div>
+
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BATALKAN Modal -->
+<div class="modal fade" id="batalkanModal" tabindex="-1" aria-labelledby="BatalkanModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="BatalkanModalLabel">Batalkan Payment</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Jika anda membatalkan payment ini, jangan lakukan pembayaran pada nomor virtual account atau QRIS yang anda dapatkan dari halaman ini lagi.<p>Segala pembayaran yang anda lakukan pada payment yang sudah dibatalkan akan menyebabkan saldo tidak dapat masuk secara otomatis.</p><br>Pastikan anda belum melakukan transaksi atau pembayaran apapun pada sesi payment ini. <p>Apakah anda yakin ingin membatalkan payment ini?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kembali</button>
+        <button type="button" class="btn btn-danger" id="btn_batalkan_payment">Ya, Batalkan Payment ini</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Konfirmasi Pembayaran Modal -->
+<div class="modal fade" id="konfirmasiModal" tabindex="-1" aria-labelledby="KonfirmasiModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="KonfirmasiModalLabel">Konfirmasi Pembayaran</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+        <form method="post" enctype="multipart/form-data" >
+      <div class="modal-body">
+            <strong  class="form-label">Nama Pengirim</strong>
+            <input name="nama_pengirim" required placeholder="Nama pengirim" class="form-control mb-3">
+<strong  class="form-label">Bank Tujuan</strong>
+            <select class="form-select mb-3" id="bank_tujuan" name="bank_tujuan"></select>
+
+            <strong class="form-label ">Foto/Screenshot bukti pembayaran</strong>
+            <input  name="gambar_bukti" type="file" accept="image/*" required class="form-control mb-4">
+
+        <p style="text-align=left;" id="infosenilai">Pastikan anda telah melakukan transfer senilai </p>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Konfirmasi Pembayaran Transaksi</button>
+      </div>
+        </form>
+    </div>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+$(document).ready(function() {
+  const data_payment={{data_json_detail_payment}};
+  console.log(data_payment);
+  let html_data;
+if(data_payment.status=="ok"){
+    if(data_payment.override){
+
+      html_data=`
+
+      <div class="d-flex flex-row bd-highlight mb-3 align-items-center">
+        <i class="far fa-check-circle text-success" style="font-size:70pt"></i>
+          <div class="d-flex flex-column ms-4">
+            <h3>Terimakasih!</h3>
+            <h5>Pesanan anda telah dibuat dengan nomor #`+data_payment.nomor_pembayaran+`</h5>
+          </div>
+      </div>
+      <div class="row mt-4 mb-4">
+      <div class="col-12 col-md-6 col-lg-6">
+      <h4>
+      <div class="d-flex m-0 align-items-center">
+      <div class="flex-fill">Total Bayar  : </div>
+      <div class="flex-fill">`+formatRupiah(data_payment.total_transaksi)+`</div>
+      </dl>
+      </h4>
+      </div>
+      <hr>
+      </div>
+
+      <div class="row">
+        <p>Silahkan klik tombol dibawah untuk beralih kehalaman pembayaran</p>
+
+      <div class="col-12 col-md-6">
+        <p><img src="`+data_payment.url_gambar_override+`" alt="" class="mt-2 mb-2 img-fluid"></p>
+        <a href="`+data_payment.link_override+`" target="_blank">
+          <button type="button" class="btn btn-primary mt-2 mb-4 btn-lg" name="button">Buka halaman pembayaran</button>
+        </a>
+      </div>
+
+      </div>
+      `;
+    }else{
+
+      html_data=`
+
+      <div class="d-flex flex-row bd-highlight mb-3 align-items-center">
+        <i class="far fa-check-circle text-success" style="font-size:70pt"></i>
+          <div class="d-flex flex-column ms-4">
+            <h3>Terimakasih!</h3>
+            <h5>Pesanan anda telah dibuat dengan nomor #`+data_payment.nomor_pembayaran+`</h5>
+          </div>
+      </div>
+      <div class="row mt-4 mb-4">
+      <div class="col-12 col-md-6 col-lg-6">
+      <h4>
+      <div class="d-flex m-0 align-items-center">
+      <div class="flex-fill">Total Bayar  : </div>
+      <div class="flex-fill">`+formatRupiah(data_payment.total_transaksi)+`</div>
+      </dl>
+      </h4>
+      </div>
+
+      </div>
+<hr>
+      <div class="row">`;
+
+      data_payment.rekening.forEach((object_rekening) => {
+        $("#bank_tujuan").append("<option value='"+object_rekening.nama_bank+"'>"+object_rekening.nama_bank+"</option>");
+        html_data+=htmlListRekening(object_rekening);
+      });
+
+      html_data+=`
+      </div>
+
+      <div class="row">
+      <div class="d-grid gap-2">
+      <button type="button" class="btn btn-primary mt-4" name="button" data-bs-toggle="modal" data-bs-target="#konfirmasiModal">Konfirmasi Payment</button>
+
+      </div>
+
+      </div>`;
+      $('#infosenilai').append(formatRupiah(data_payment.total_transaksi));
+    }
+
+    $('#btn_batalkan_payment').click(function() {
+      window.location=data_payment.link_batalkan_payment;
+    });
+    console.log(data_payment);
+  }else if (data_payment.status=="dikonfirmasi") {
+     html_data=`<div class="mb-4 text-center">
+                  <i class="far fa-check-circle text-success" style="font-size:70pt"></i>
+                  </div>
+                  <div class="text-center">
+                  <h1>Terimakasih!</h1>
+                  <p>Kami telah menerima konfirmasi pembayaran anda, kami akan segera memproses pesanan anda setelah kami menvalidasi pembayaran anda, harap mengunggu.</p>
+                  <a href="/"><button class="btn btn-outline-success">Home</button></a>
+          </div>
+        `;
+  }
+
+  $('#data_payment').html(html_data);
+
+
+
+function htmlListRekening(object) {
+  return `  <div class="col-12 m-2">
+    <article class="card card-body">
+    <div class="d-flex flex-row">
+    <div class="p-2">
+    <img src="`+object.logo+`" alt="" class="img-fluid">
+    </div>
+
+    <div class="p-2 flex-fill">
+    <h6 class="title">`+object.nama_bank+`</h6>
+      <b class="text-primary">`+object.nomor_rekening+`</b>
+      </b><br>
+      <small>`+object.atas_nama+`</small>
+    </div>
+    </div>
+    </article>
+    </div>`;
+}
+
+
+});
+</script>

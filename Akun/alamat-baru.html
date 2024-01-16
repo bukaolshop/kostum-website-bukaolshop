@@ -1,0 +1,24 @@
+<section>
+  <div class="container">
+    <div class="row mt-4">
+      <div class="col-12 col-md-4 col-lg-4">
+        <div class="list-group mb-4">
+          <a href="?page=profil" class="list-group-item list-group-item-action" aria-current="true">
+            Profil
+          </a>
+          <a href="?page=transaksi" class="list-group-item list-group-item-action">Transaksi</a>
+          <a href="?page=alamat" class="list-group-item list-group-item-action active">Alamat Saya</a>
+          <a href="?page=favorit" class="list-group-item list-group-item-action">Favorit</a>
+          <a href="?page=logout" class="list-group-item list-group-item-action "><span class="fa fa-power-off"></span>  Logout </a>
+        </div>
+      </div>
+      <div class="col-md-8 col-lg-8 col-12">
+        <h3 class="mb-4">Tambah Alamat baru</h3>
+        {{html_form_alamat_baru}}
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- shortcode dibawah akan menggenerate otomatis form untuk menambahkan alamat baru -->
+{{script_form_alamat_baru}}

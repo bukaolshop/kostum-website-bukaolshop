@@ -1,0 +1,63 @@
+<section>
+  <div class="container">
+    <div class="row mt-4">
+      <div class="col-12 col-md-4 col-lg-4">
+        <div class="list-group mb-4">
+          <a href="?page=profil" class="list-group-item list-group-item-action" aria-current="true">
+            Profil
+          </a>
+          <a href="?page=transaksi" class="list-group-item list-group-item-action">Transaksi</a>
+          <a href="?page=alamat" class="list-group-item list-group-item-action">Alamat Saya</a>
+          <a href="?page=favorit" class="list-group-item list-group-item-action active">Favorit</a>
+          <a href="?page=logout" class="list-group-item list-group-item-action "><span class="fa fa-power-off"></span>  Logout </a>
+        </div>
+      </div>
+      <div class="col-md-8 col-lg-8 col-12" >
+        <h3 class="mb-4">Favorit Anda</h3>
+        <div id="alert"></div>
+        <div class="row" id="list_data_favorit">
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<script type="text/javascript">
+  $(document).ready(function() {
+    const alert_info={{data_json_status}};
+    if(alert_info.status=="sukses"){
+      $('#alert').html('<div class="alert alert-success" role="alert"><h4 class="alert-heading">'+alert_info.judul+'</h4><p>'+alert_info.pesan+'</p></div>');
+    }
+
+    const data_favorit={{data_json_list_favorit}};
+    if(data_favorit.status="ok"){
+      console.log(data_favorit);
+      if(data_favorit.data.length>0){
+        for(var object_data in data_favorit.data) {
+          $("#list_data_favorit").append(htmlListProdukFavorit(data_favorit.data[object_data]));
+        }
+      }
+    }
+
+  });
+  function htmlListProdukFavorit(object) {
+    let list_produk= `<div class="col-md-3 col-6 mb-4">
+      <a href="`+object.url_produk+`" class="text-decoration-none">
+        <div class="card shadow-sm h-100 list_produk">
+          <img src="`+object.url_gambar_barang+`" class="card-img-top" >
+          <div class="card-body p-2"><p class="judul-produk">`+object.nama_barang+`</p>
+            <p class="fw-bolder mb-1">`+formatRupiah(object.harga_barang)+`</p>`;
+
+            if(object.harga_barang_asli>0){
+              list_produk+=`<div class="mb-2"><span class="discount ">80%</span><del class="small">`+formatRupiah(object.harga_barang_asli)+`</del></div>`;
+            }
+
+            list_produk+=`<a href="`+object.url_hapus_favorit+`">
+              <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <button class="btn btn-danger me-md-2" type="button">
+                  <i class="fa-solid fa-trash"></i></button></div></a>`;
+
+      list_produk+=`</div></div></a></div>`;
+      return list_produk;
+    }
+  </script>

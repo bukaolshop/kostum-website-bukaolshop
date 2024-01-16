@@ -1,0 +1,62 @@
+<section>
+  <div class="container">
+    <div class="row mt-4">
+      <div class="col-12 col-md-4 col-lg-4">
+        <div class="list-group mb-4">
+          <a href="?page=profil" class="list-group-item list-group-item-action" aria-current="true">
+            Profil
+          </a>
+          <a href="?page=transaksi" class="list-group-item list-group-item-action active">Transaksi</a>
+          <a href="?page=alamat" class="list-group-item list-group-item-action">Alamat Saya</a>
+          <a href="?page=favorit" class="list-group-item list-group-item-action">Favorit</a>
+          <a href="?page=logout" class="list-group-item list-group-item-action "><span class="fa fa-power-off"></span>  Logout </a>
+        </div>
+      </div>
+      <div class="col-md-8 col-lg-8 col-12" id="list_data_transaksi">
+        <h3 class="mb-4">Transaksi Anda</h3>
+
+      </div>
+    </div>
+  </div>
+</section>
+<script type="text/javascript">
+  $(document).ready(function() {
+    const data_transaksi={{data_json_list_transaksi}};
+    if(data_transaksi.status=="ok"){
+      console.log(data_transaksi);
+      if(data_transaksi.data.length>0){
+        for(var object_data in data_transaksi.data) {
+          $("#list_data_transaksi").append(htmlListTransaksi(data_transaksi.data[object_data]));
+        }
+      }
+    }
+
+  });
+  function htmlListTransaksi(object) {
+    return `
+    <article class="card order-group mb-4">
+      <header class="card-header d-flex flex-md-row flex-column">
+        <b class="p-2 flex-fill">Nomor Transaksi: #`+object.nomor_pembayaran+`</b>
+        <span class="p-2 text-end">Last update: `+object.tanggal+` </span>
+      </header>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-4" style="border-right:1px solid #efefef">
+            <h6>`+object.nama_barang+`</h6>
+            <p><img class="rounded-circle border" src="`+object.url_gambar_barang+`" style="width: 80px;height: 80px;"></p>
+          </div>
+          <div class="col-md-4 mb-2 mt-3">
+            <span class="text-success"><i class="fa  fa-credit-card"></i> Status Pembayaran</span>
+            <h6 style="text-transform:uppercase;">`+object.status_bayar+`</h6>
+            <span class="text-success"><i class="fas fa-shipping-fast"></i> Status Pengiriman</span>
+            <h6 style="text-transform:uppercase;">`+object.status_pengiriman+`</h6>
+          </div>
+          <div class="col-md-4 mt-3">
+            <ul class="list-group mb-4">
+              <a href="/akun/?page=transaksi&amp;nomor=`+object.nomor_pembayaran+`" class="list-group-item ">Detail Transaksi</a>
+          </ul>
+          </div>
+        </div>
+      </div>
+</article>`}
+</script>

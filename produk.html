@@ -1,0 +1,406 @@
+<section>
+  <div class="container">
+    <div class="row mt-4">
+      <div class="col-12">
+
+        <div class="row">
+          <nav class="col-md-12">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="/">Home</a></li>
+              <li class="breadcrumb-item"><a href="/kategori/">Kategori</a></li>
+              <li class="breadcrumb-item" id="breadcrumb_kategori"></li>
+              <li class="breadcrumb-item active" aria-current="page" id="breadcrumb_produk">Gamis Jersey Janetta FREE KHIMAR</li>
+            </ol>
+          </nav>
+        </div>
+
+      </div>
+    </div>
+    <div class="card mb-4">
+      <div class="row">
+        <div class="col-12 col-md-6">
+          <div id="carouselProduk" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselProduk" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselProduk" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+        </div>
+
+
+        <div class="col">
+          <article style="padding: 2rem 2.3rem;">
+
+            <h1 class="titleproduk"></h1>
+            <div class="mb-3">
+              <p id="price-detail" class="h3"></p>
+              <p id="cashback" class="h5"></p>
+            </div>
+            <h4 style="font-size:1rem;font-weight:normal;margin-top:5px;font-style: italic;"></h4>
+            <div class="rating-wrap my-3">
+
+
+            </div>
+
+
+            <hr>
+
+            <p id="deskripsi_panjang"></p>
+
+            <hr>
+
+
+            <dl class="row mt-4">
+
+
+              <dt class="col-sm-4">Kondisi</dt>
+              <dd class="col-sm-8" id="kondisi_barang"></dd>
+
+              <div id="bagian_harga_grosir" class="col-12" style="display:none">
+                <div class="row">
+                  <dt class="col-sm-4">Harga Grosir</dt>
+                  <dd class="col-sm-8" id="harga_grosir"></dd>
+                </div>
+
+              </div>
+
+
+              <dt class="col-sm-4">Tanggal Posting</dt>
+              <dd class="col-sm-8" id="tanggal"></dd>
+            </dl>
+
+            <hr>
+
+
+            <div class="p-4 border rounded">
+
+              <!-- VARIAN PRODUK JIKA ADA -->
+              <div class="row d-none" id="html_varian">
+
+                <div class="col-md-12">
+                  <h6>Pilih Varian Produk</h6>
+                  <select class="form-control mb-3" name="varian" id="select_varian">
+
+                  </select>
+                </div>
+                <div class="col-md-12 mb-4 d-none" id="bagian_varian">
+                  <div class="item-option-select">
+                    <h6>Pilih Opsi Varian</h6>
+                    <div class="btn-group" role="group" id="list_varian">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-12 mb-4">
+                  <small>Harga varian</small><br>
+                  <span class="price h5" id="harga_varian">Rp994</span>
+                </div>
+
+              </div>
+              <!-- VARIAN PRODUK JIKA ADA -->
+
+              <!-- WARNA DAN UKURAN JIKA ADA -->
+              <div class="row d-none" id="html_warna_ukuran">
+                <div class="col-md-12 mb-4 d-none" id="bagian_warna">
+                  <div class="item-option-select">
+                    <h6>Warna Produk</h6>
+                    <div class="btn-group" role="group" id="list_warna">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-12 mb-4 d-none" id="bagian_ukuran">
+                  <div class="item-option-select">
+                    <h6>Warna Produk</h6>
+                    <div class="btn-group" role="group" id="list_ukuran">
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+              <!-- WARNA DAN UKURAN JIKA ADA -->
+
+
+              <div class="row" id="form_jumlah_produk">
+                <div class="col-12 flex-grow-0">
+                  <h6>Jumlah Produk</h6>
+                  <div class="input-group mb-3" style="width:130px" >
+
+                    <button class="btn btn-primary rounded-start" type="button" id="button-minus"> - </button>
+
+                    <input type="text" class="form-control" value="1" name="jumlah" id="jumlah_produk" style="text-align: center;">
+
+                    <button class="btn btn-primary rounded-end" type="button" id="button-plus"> + </button>
+
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+
+                <div class="d-grid gap-3 d-md-block">
+
+                  <button class="btn  btn-primary btn-lg  btn-block" onclick="showBeliModal('cart')">
+                    <span class="text">Masukkan keranjang</span> <i class="fas fa-shopping-cart"></i>
+                  </button>
+
+                  <button type="button" class="btn  btn-primary btn-lg  btn-block" onclick="showBeliModal('direct')">
+                    <span class="text">Beli Langsung</span> <i class="fas fa-cash-register"></i>
+                  </button>
+
+                  <a href="" id="favorite_url">
+                    <button type="button" class="btn btn-lg btn-outline-primary">
+                      <i class="fas fa-heart"></i>
+                    </button>
+                  </a>
+
+
+                </div>
+              </div>
+
+
+
+            </article>
+          </div>
+
+
+
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- Konfirmasi Pembayaran Modal -->
+  <div class="modal fade" id="beliModal" tabindex="-1" aria-labelledby="beliLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="beliLabel">Beli produk</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form class="" method="post">
+          <div class="modal-body">
+            <strong  class="form-label">Jumlah beli</strong>
+            <input class="form-control" name="jumlah" id="jumlah_beli" value="" type="text" value=""  readonly style="background:#d6d6d6">
+            <br>
+
+            <div id="form-ukuran-warna"></div>
+            <div id="form-varian-opsi"></div>
+
+
+
+            <strong  class="form-label">Catatan</strong>
+            <input name="catatan" id="catatan_form"   placeholder="Catatan transaksi, ex no hp, ukuran produk dll" class="form-control mb-3">
+            <input type="hidden" name="verifikasi_token" value="{{token_beli_produk}}">
+
+
+
+          </div>
+          <div class="modal-footer">
+            <button type="submit" name="tipe" value="direct" class="btn btn-primary" id="lanjut_btn">Lanjutkan Transaksi</button>
+          </div>
+        </form>
+
+
+
+
+      </div>
+    </div>
+  </div>
+
+
+  <script type="text/javascript">
+  $(document).ready(function() {
+    const data_produk={{data_json_detail_produk}};
+    if(data_produk.status=="ok"){
+      console.log(data_produk);
+      $('.titleproduk').text(data_produk.data.nama_barang);
+      $('#price-detail').text(formatRupiah(data_produk.data.harga_barang));
+      $('#deskripsi_panjang').html(data_produk.data.deskripsi_panjang);
+      $('#kondisi_barang').text(data_produk.data.kondisi_barang);
+      $('#tanggal').text(data_produk.data.tanggal);
+      if(data_produk.data.list_gambar.length>0){
+        for(var url in data_produk.data.list_gambar) {
+          $( ".carousel-inner").append(htmlListGambar(data_produk.data.list_gambar[url],url==0?"active":""));
+        }
+      }
+      if(data_produk.data.list_varian.length>0){
+        $('#html_varian').removeClass('d-none');
+        data_produk.data.list_varian.forEach((object_varian) => {
+          $( "#select_varian").append(
+            '<option data-harga="'+object_varian.harga_varian+'" value="'+object_varian.id_varian+'" data-opsi='+JSON.stringify(object_varian.opsi_varian)+' data-nama-varian="'+object_varian.judul_varian+'"> '+object_varian.judul_varian+' (stok '+object_varian.stok_varian+') </option>'
+          );
+        });
+        $('#select_varian').on('change', function() {
+          var selected = $(this).find('option:selected');
+          var harga_varian = selected.data('harga');
+          $('#harga_varian').html(formatRupiah(harga_varian));
+          let opsi = selected.attr('data-opsi');
+          var opsi_varian= JSON.parse(opsi);
+          $('#list_varian').html("");
+          if(opsi_varian.length>0){
+            $('#bagian_varian').removeClass('d-none');
+            opsi_varian.forEach((item) => {
+                $('#list_varian').append(`
+                  <input type="radio" class="btn-check opsi_varian" name="opsi_varian"  id="varian-`+item+`"  value="`+item+`">
+                  <label class="btn btn-outline-primary" for="varian-`+item+`">`+item+`</label>
+                  `);
+            });
+
+
+            let list_opsi='<div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">';
+            for (i = 0; i < opsi_varian.length; i++) {
+              list_opsi+='<label class="btn btn-light"><input type="radio" name="opsivarian" value="'+opsi_varian[i]+'">'+opsi_varian[i]+'</input></label>';
+            }
+
+          //  $('#opsi').html(list_opsi);
+          }else{
+            $('#opsi').html('Tidak ada opsi');
+          }
+
+        });
+      }
+      $('#favorite_url').attr('href', data_produk.data.url_add_favorite);
+      if(data_produk.data.data_kategori.url_kategori){
+        $('#breadcrumb_kategori').html('<a href="'+data_produk.data.data_kategori.url_kategori+'">'+data_produk.data.data_kategori.nama_kategori+'</a>');
+        $('#breadcrumb_produk').html('<a href="'+data_produk.data.url_produk+'">'+data_produk.data.nama_barang+'</a>');
+      }
+      if(data_produk.data.peraturan_produk.tipe_input_catatan){
+        $('#catatan_form').attr('required', data_produk.data.peraturan_produk.catatan_wajib_isi);
+        if(data_produk.data.peraturan_produk.tipe_input_catatan=="angka"){
+          $('#catatan_form').attr('type', 'number');
+        }
+        if(data_produk.data.peraturan_produk.max_1_trx){
+          $('#form_jumlah_produk').hide();
+        }
+        if(data_produk.data.peraturan_produk.cashback){
+          let data_cashback=data_produk.data.peraturan_produk.cashback;
+          let jumlah_cashback="";
+          if(data_cashback.tipe_cashback=="persen"){
+            jumlah_cashback=data_cashback.jumlah_cashback+"%";
+          }else{
+            jumlah_cashback=formatRupiah(data_cashback.jumlah_cashback);
+          }
+          let rule_cashback="";
+          if(data_cashback.maksimal_cashback){
+            rule_cashback=`Maksimal cashback `+formatRupiah(data_cashback.maksimal_cashback)+`, dengan minimum pembelian `+formatRupiah(data_cashback.minimum_pembelian);
+          }else{
+            rule_cashback=`Minimum pembelian `+formatRupiah(data_cashback.minimum_pembelian);
+          }
+
+
+
+          let html_cashback=`
+          <span class="badge bg-success">`+data_cashback.caption+`</span>
+          <span class="badge bg-primary">Cashback `+jumlah_cashback+`</span>
+          <br>
+          <span style="font-size:9pt">`+rule_cashback+`</span>`;
+
+          $('#cashback').html(html_cashback);
+        }
+      }
+      if(data_produk.data.harga_grosir){
+        $('#bagian_harga_grosir').show();
+        $('#harga_grosir').html(data_produk.data.harga_grosir);
+      }
+      if(data_produk.data.warna && data_produk.data.warna.length>0){
+        $('#bagian_warna').removeClass('d-none');
+        data_produk.data.warna.forEach((item,urutan) => {
+            $('#list_warna').append(`
+              <input type="radio" class="btn-check warna_produk" name="warna_produk" id="warna-`+urutan+`"  value="`+item+`">
+              <label class="btn btn-outline-primary" for="warna-`+urutan+`">`+item+`</label>
+              `);
+        });
+        $('#html_warna_ukuran').removeClass('d-none');
+      }
+      if(data_produk.data.ukuran && data_produk.data.ukuran.length>0){
+        $('#bagian_ukuran').removeClass('d-none');
+        data_produk.data.ukuran.forEach((item,urutan) => {
+            $('#list_ukuran').append(`
+              <input type="radio" class="btn-check ukuran_produk" name="ukuran_produk" id="ukuran-`+urutan+`"  value="`+item+`">
+              <label class="btn btn-outline-primary" for="ukuran-`+urutan+`">`+item+`</label>
+              `);
+        });
+        $('#html_warna_ukuran').removeClass('d-none');
+      }
+    }
+
+
+    function htmlListGambar(url_gambar,active) {
+      return '<div class="carousel-item '+active+'"><img src="'+url_gambar+'" class="d-block w-100"></div>';
+    }
+
+
+
+    $('#select_varian').trigger('change');
+
+  });
+
+  function showBeliModal(tipe) {
+    var myModal = new bootstrap.Modal(document.getElementById('beliModal'));
+    if(tipe=="cart"){
+      $('#lanjut_btn').text("Masukkan Keranjang");
+    }else{
+      $('#lanjut_btn').text("Lanjutkan Transaksi");
+    }
+    $('#jumlah_beli').val($('#jumlah_produk').val());
+
+
+    //CHECK APAKAH ADA WARNA ATAU UKURAN YANG DIPILIH
+    let html_warna_ukuran=``;
+
+    if($('.warna_produk').val() && $("input[type='radio'].warna_produk:checked").val()){
+      html_warna_ukuran+=`
+      <strong  class="form-label">Warna</strong>
+      <input class="form-control" name="warna"  value="`+$("input[type='radio'].warna_produk:checked").val()+`" type="text" readonly style="background:#d6d6d6">
+      <br>`;
+    }
+    if($('.ukuran_produk').val() && $("input[type='radio'].ukuran_produk:checked").val()){
+      html_warna_ukuran+=`
+      <strong  class="form-label">Ukuran</strong>
+      <input class="form-control" name="ukuran"  value="`+$("input[type='radio'].ukuran_produk:checked").val()+`" type="text" readonly style="background:#d6d6d6">
+      <br>`;
+    }
+
+    // if($('.ukuran_produk').val() && $("input[type='radio'].ukuran_produk:checked").val()){
+    //   html_warna_ukuran+=`
+    //   <strong  class="form-label">Ukuran</strong>
+    //   <input class="form-control" name="ukuran"  value="`+$("input[type='radio'].ukuran_produk:checked").val()+`" type="text" readonly style="background:#d6d6d6">
+    //   <br>`;
+    // }
+    if($('#select_varian').val()!==null){
+      let nama_varian=$('#select_varian').find(':selected').data('nama-varian');
+      let html_varian="";
+
+      if($("input[type='radio'].opsi_varian:checked").val()){
+        nama_varian+=" ("+$("input[type='radio'].opsi_varian:checked").val()+")";
+        html_varian+=`<input type="hidden" name="opsi_varian" value="`+$("input[type='radio'].opsi_varian:checked").val()+`">`;
+      }
+
+      html_varian+=`<strong class="form-label">Varian</strong>
+      <input class="form-control"  value="`+nama_varian+`" type="text" disabled>`;
+
+      html_varian+=`<input type="hidden" name="id_varian" value="`+$('#select_varian').val()+`">`;
+
+      $('#form-varian-opsi').html(html_varian+"<br>");
+
+    }
+
+
+
+    $('#form-ukuran-warna').html(html_warna_ukuran);
+
+
+    $('#lanjut_btn').val(tipe);
+    myModal.show()
+  }
+  </script>

@@ -1,0 +1,42 @@
+<section>
+  <div class="container">
+
+    <div class="row" id="list_voucher">
+    </div>
+
+  </div>
+
+</section>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    const data_voucher={{data_list_voucher}};
+
+    if(data_voucher.status=="ok"){
+      for(var object_data in data_voucher.data) {
+        $( "#list_voucher").append(htmlListVoucher(data_voucher.data[object_data]));
+      }
+    }
+    $("#nav_voucher").addClass(activeClass());
+    function htmlListVoucher(object) {
+      return `<div class="col-md-6 col-12">
+        <div class="card mb-3 shadow ">
+          <div class="row no-gutters">
+            <div class="col-md-4 col-4" style="padding:20px" id="second">
+              <img src="https://cdn-icons-png.flaticon.com/512/869/869649.png" class="card-img  gambar_kontak">
+            </div><div class="col-md-8 col-8" id="first">
+              <div class="card-body text-left" style="padding-top:22px">
+                <h5 class="card-title teks-primary"><small>Kode Voucher</small><br><strong>`+object.kode_voucher+`</strong></h5>
+                <p class=" text-black" style="font-size:20pt;text-transform:uppercase;">potongan</p>
+                <p class="mb-1">Berlaku sampai `+object.tanggal_berakhir+`</p>
+                <p class="mb-1">  <small class="text-muted">Limit Voucher : `+object.limit_voucher+`</small></p>
+                <p class="mb-1">  <small class="text-muted">Minimal Belanja : `+formatRupiah(object.minimal_belanja)+`</small></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>`;
+    }
+  });
+
+</script>

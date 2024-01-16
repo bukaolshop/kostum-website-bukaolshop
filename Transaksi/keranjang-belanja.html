@@ -1,0 +1,138 @@
+<section>
+  <div class="container mt-4">
+
+    <!-- ROW CART -->
+  <form method="post">
+    <div class="row">
+
+
+      <div class="col-md-8 col-12 ">
+        <div class="row">
+
+          <div class="col-12" id="list_cart">
+
+          </div>
+
+        </div>
+
+      </div>
+      <div class="col-md-3 col-12">
+        <div class="card">
+          <div class="card-body">
+            <dl class="dlist-align">
+              <dt>Total Belanja:</dt>
+              <dd class="text-right"><strong id="total_belanja_cart"></strong></dd>
+            </dl>
+
+            <hr>
+            <button type="submit" class="btn btn-primary">Lanjutkan Pembelian</button>
+          </div>
+          </div>
+        </div>
+
+
+      </div>
+    </form>
+      <!-- ROW CART -->
+
+    </div>
+
+  </section>
+
+  <!-- HAPUS CART Modal -->
+<div class="modal fade" id="hapusCartModal" tabindex="-1" aria-labelledby="hapusCartLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="hapusCartLabel">Hapus dari keranjang</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Apa anda yakin ingin menghapus produk ini dari keranjang belanja?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kembali</button>
+        <a href="" id="hapusCartLink"><button type="button" class="btn btn-danger">Hapus</button></a>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+  <script type="text/javascript">
+  $(document).ready(function() {
+    const data_cart=<?=json_encode($obj)?>;
+
+    if(data_cart.status=="ok"){
+      console.log(data_cart);
+      for(var object_data in data_cart.data) {
+        $( "#list_cart").append(htmlListCart(data_cart.data[object_data]));
+      }
+      $('#total_belanja_cart').text(formatRupiah(data_cart.total_keranjang));
+    }
+
+    function htmlListCart(object) {
+      let html_cart=`
+      <article class="card card-body mb-3">
+          <div class="row">
+
+            <div class="col-md-6 col-12">
+              <div class="d-flex align-items-center">
+                <div class="flex-shrink-0">
+                  <img src="`+object.url_gambar_barang+`" class="border" style="width: 90px;height: 90px;">
+                </div>
+                <div class="flex-grow-1 ms-3">
+                  <p class="text-primary">
+                    <b>
+                      <a href="`+object.url_produk+`">`+object.nama_barang+`</a>
+                    </b>
+                  </p>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="col-md-2 col-12 mt-4 mt-md-0">
+              <span>Jumlah</span>
+              <h6 class="mt-0"><span class="badge badge-pill  bg-primary ">`+object.jumlah_barang+`</span></h4>
+            </div>
+            <div class="col-md-2 col-6 mt-4 mt-md-0">
+              <span>Harga</span>
+              <h6 class="mt-0">`+formatRupiah(object.harga_barang)+`</h4>
+            </div>
+            <div class="col-md-2 col-lg-2 col-6 mt-4 mt-md-0">
+              <span>Total</span>
+              <p class="h6 fw-bolder"> `+formatRupiah(object.jumlah_barang*object.harga_barang)+`</p>
+
+            </div>
+
+
+
+            <div class="col-12">
+              <div class="d-flex align-items-end">
+                <div class="flex-grow-1">
+                  <label class="text-muted mb-0 mt-3">Catatan Pesanan</label>
+                  <textarea class="form-control w-75" name="`+object.name_id_cart+`" rows="2" placeholder="Catatan Pesanan">`+object.catatan_cart+`</textarea>
+                </div>
+
+
+                <div class="flex-shrink-1 p-2">
+                  <button class="btn btn-warning" name="button" type="button" onclick="showModalHapusCart('`+object.url_hapus_cart+`'); return false;"><i class="fa-solid fa-trash"></i> </button>
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+        </article>`;
+      return html_cart;
+    }
+  });
+
+  function showModalHapusCart(url_hapus_cart) {
+    var myModal = new bootstrap.Modal(document.getElementById('hapusCartModal'))
+    $('#hapusCartLink').attr('href', url_hapus_cart)
+    myModal.show()
+  }
+</script>

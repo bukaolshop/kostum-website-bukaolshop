@@ -1,0 +1,69 @@
+<section>
+  <div class="container">
+    <div class="row mt-4">
+      <div class="col-12 col-md-4 col-lg-4">
+        <div class="list-group mb-4">
+          <a href="?page=profil" class="list-group-item list-group-item-action" aria-current="true">
+            Profil
+          </a>
+          <a href="?page=transaksi" class="list-group-item list-group-item-action">Transaksi</a>
+          <a href="?page=alamat" class="list-group-item list-group-item-action active">Alamat Saya</a>
+          <a href="?page=favorit" class="list-group-item list-group-item-action">Favorit</a>
+          <a href="?page=logout" class="list-group-item list-group-item-action "><span class="fa fa-power-off"></span>  Logout </a>
+        </div>
+      </div>
+
+      <div class="col-md-8 col-lg-8 col-12" id="list_data_alamat">
+        <div class="d-flex flex-row">
+          <div class="p-2 flex-fill">
+            <h3>Alamat Anda</h3>
+          </div>
+          <div class="p-2 "><a href="?page=alamatbaru" class="btn btn-primary"> Tambah Alamat Baru</a></div>
+        </div>
+        <div id="alert"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<script type="text/javascript">
+$( document ).ready(function() {
+  const alert_info={{data_json_status}};
+  if(alert_info.status=="sukses"){
+    $('#alert').html('<div class="alert alert-success" role="alert"><h4 class="alert-heading">'+alert_info.judul+'</h4><p>'+alert_info.pesan+'</p></div>');
+  }
+  const data_alamat={{data_json_list_alamat}};
+  if(data_alamat.status="ok"){
+    console.log(data_alamat);
+    if(data_alamat.data.length>0){
+      for(var object_data in data_alamat.data) {
+        $("#list_data_alamat").append(htmlListAlamat(data_alamat.data[object_data]));
+      }
+    }
+  }
+
+});
+function htmlListAlamat(object) {
+  let html_list=`<article class="card order-group mb-4">`;
+  if(object.default_ekspedisi==1){
+    html_list+=`<header class="card-header text-white bg-primary bg-gradient"><b class="d-inline-block mr-3">Alamat utama pengiriman</b></header>`;
+  }
+  html_list+=`<div class="card-body">
+    <div class="row">
+      <div class="col-md-6 mb-2 mt-3" style="border-right:1px solid #efefef">
+        <span class="text-success"><i class="fas fa-map-marker-alt"></i> Informasi Lokasi</span>
+        <p>`+object.kecamatan+`, `+object.kota+`, `+object.provinsi+`, POS `+object.kode_pos+`<br>`+object.alamat_lengkap+`</p>
+      </div>
+      <div class="col-md-6 mt-3">
+        <span class="text-success"><i class="fas fa-address-book"></i> Informasi Kontak</span>
+        <p class="card-text text-left">`+object.nama_penerima+`<br>Nomor Hp : `+object.nomor_telepon+`</p>`;
+
+        if(object.default_ekspedisi==0){
+          html_list+=`<a href="`+object.url_jadikan_alamat_utama+`" style="font-size:10pt" class="btn btn-outline-primary">Jadikan Alamat Utama Pengiriman</a>`;
+        }
+
+  html_list+=`</div></div></div></article>`;
+  return html_list;
+}
+</script>

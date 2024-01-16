@@ -1,0 +1,401 @@
+<section>
+
+<form method="post">
+
+  <div class="container">
+    <h2 class="mt-4">Checkout Belanja</h2>
+    <div class="row mt-2 mb-2">
+      <aside class="col-lg-8">
+
+        <div class="row">
+          <div class="col-12">
+
+
+            <article class="card card-body ">
+              <div class="row align-items-center">
+                <div class="col-md-8 col-12">
+                  <h5>Alamat pengiriman</h5>
+                </div>
+                <div class="col-md-4 col-12">
+                  <div class="btn-group float-right" role="group">
+                    <a href="/akun/?page=alamatbaru&amp;ref=checkout" class="btn btn-outline-primary btn-sm">Tambah Alamat</a>
+                    <a href="/akun/?page=alamat&amp;ref2=checkout" class="btn btn-outline-primary btn-sm">Ganti Alamat</a>
+
+                  </div>
+                </div>
+                <div class="col-12 col-md-6">
+                  <table>
+                    <tbody>
+
+                      <tr>
+                        <td style="width: 150px;">Nama Penerima</td>
+                        <td style="width: 20px;"> : </td>
+                        <td id="nama_penerima"></td>
+                      </tr>
+
+                      <tr>
+                        <td >Alamat Lengkap</td>
+                        <td> : </td>
+                        <td id="alamat_lengkap"></td>
+                      </tr>
+
+                      <tr>
+                        <td>Nomor Telepon</td>
+                        <td> : </td>
+                        <td id="nomor_telepon"></td>
+                      </tr>
+
+                    </tbody></table>
+                  </div>
+                  <div class="col-12 col-md-6">
+                    <table>
+                      <tbody>
+                        <tr>
+                          <td style="width: 150px;">Provinsi</td>
+                          <td style="width: 20px;"> : </td>
+                          <td id="provinsi"></td>
+                        </tr>
+                        <tr>
+                          <td>Kota / Kecamatan</td>
+                          <td> : </td>
+                          <td id="kecamatan"></td>
+                        </tr>
+
+                      </tbody></table>
+                    </div>
+
+                  </div>
+                </article>
+              </div>
+
+
+
+              <div class="col-12">
+                <article class="card card-body mt-4 mb-4">
+                  <div class="row align-items-center">
+                    <div class="col-md-8 col-12">
+                      <h5>Produk yang dibeli</h5>
+                    </div>
+                    <div class="col-12 mb-4">
+                      <div id="keranjang_belannja">
+
+
+                      </div>
+                    </div>
+
+
+                  </div>
+                </article>
+              </div>
+            </div>
+          </aside>
+          <aside class="col-lg-4 ">
+            <div class="row">
+              <div class="col-12">
+                <article class="card card-body">
+
+                  <label for="kode_voucher" class="form-label">Punya Kode Voucher?</label>
+
+                    <div class="input-group">
+                      <input type="text" name="kode_voucher" class="form-control" id="kode_voucher" placeholder="Kode Voucher">
+                      <button class="btn btn-primary" name="cek_voucher" value="cek_voucher">Apply</button>
+                    </div>
+
+
+                  <div id="hasilvoucher">
+
+                  </div>
+
+                </article>
+              </div>
+              <div class="col-12">
+                <article class="card card-body mt-4" >
+                  <label>Metode Pembayaran</label>
+
+                  <input type="radio" class="btn-check" name="metode_bayar" id="metode-saldo" value="saldo" checked>
+                  <label class="btn btn-outline-primary mt-3 d-flex align-items-center justify-content-between ps-4" for="metode-saldo" style="height:70px">
+                    <span>{{nama_saldo}} (<b id="saldo_user"></b>)</span>
+                    <i class="fa-regular fa-circle-check fa-xl" style="color: white;"></i>
+                  </label>
+
+                  <input type="radio" class="btn-check" name="metode_bayar" id="metode-rekening" value="rekening">
+                  <label class="btn btn-outline-primary mt-3 d-flex align-items-center justify-content-between ps-4" for="metode-rekening" style="height:70px">
+                    <span>Transfer Rekening</span>
+                    <i class="fa-regular fa-circle-check fa-xl" style="color: white;"></i>
+                  </label>
+                  <div id="class_metode_bayar"></div>
+                </article>
+              </div>
+
+
+
+              <div class="col-12">
+                <article class="card card-body mt-4 mb-4 bg-dark bg-gradient text-white shadow">
+                  <b>Ringkasan Pesanan</b>
+                  <br>
+                  <p id="totalproduk"></p>
+                  <p id="totalongkir"></p>
+                  <p id="totalpotongan"></p>
+
+                  <div id="hasilbiayatambahan">
+                  </div>
+                  <div id="hasilpotongan">
+                  </div>
+
+                  <hr>
+
+                  <p id="totalbayar"></p>
+
+                  <div id="butuhpin">
+
+                  </div>
+
+                  <div class="d-grid gap-1">
+                    <button type="submit" class="btn btn-light " id="buatorder" style="">  Buat Order
+                    </button>
+
+                  </div>
+
+
+                </article>
+
+
+              </div>
+            </div>
+
+          </aside>
+
+        </div>
+      </div>
+      </form>
+    </section>
+
+
+
+    <script type="text/javascript">
+    const json_transaksi={{data_json_transaksi_baru}};
+    console.log(json_transaksi);
+    $(document).ready(function() {
+
+
+      if(json_transaksi.status=="ok" && json_transaksi.data_transaksi.length>0){
+        if("alamat_user" in json_transaksi){
+          setAlamatUser(json_transaksi.alamat_user);
+        }
+
+        // Loop Keranjang Belanja
+        json_transaksi.data_transaksi.forEach((data_keranjang) => {
+          //  console.log(data_keranjang);
+          setKeranjang(data_keranjang);
+        });
+
+        $('.class_ongkir').on('change', function() {
+          refreshPerhitungan();
+        });
+        $('.class_ongkir').trigger('change');
+
+        $('#saldo_user').text(formatRupiah(json_transaksi.saldo));
+
+        if(!json_transaksi.metode_bayar.rekening){
+          $('#metode-rekening').prop('checked', false).prop('disabled', true);
+        }
+        if(!json_transaksi.metode_bayar.saldo){
+          $('#metode-saldo').prop('checked', false).prop('disabled', true);
+        }
+
+        if(json_transaksi.butuh_pin===true){
+          $('#butuhpin').html(`  <p class="mb-1 mt-3">PIN akun Anda:</p>
+            <input type="password" id="idpin" name="pin" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="PIN Anda" maxlength="6" minlength="6" pattern="[0-9]*" required class="form-control mb-4"
+            style="height: 60px;
+            text-align: left;
+            font-family: 'Avenir', sans-serif !important;
+            font-weight: 400;
+            font-size: 20px;
+            letter-spacing: 15px;
+            text-align:center">`);
+        }
+      }
+    });
+
+    function setAlamatUser(alamat_user) {
+      $('#nama_penerima').text(alamat_user.nama_penerima);
+      $('#alamat_lengkap').text(alamat_user.alamat_lengkap);
+      $('#nomor_telepon').text(alamat_user.nomor_telepon);
+      $('#provinsi').text(alamat_user.provinsi);
+      $('#kecamatan').text(alamat_user.kecamatan+", "+alamat_user.kota);
+    }
+
+    function setKeranjang(data_keranjang) {
+      let html_keranjang=`<div class="col-12 mb-4">
+      <div class="card card-body">
+      <div class="row">
+      <div class="col-md-8 col-lg-8 col-12">`;
+      data_keranjang.data_produk.forEach((data_produk) => {
+
+        let html_berat= data_produk.berat>0?'<p class="mb-0"> Berat : '+data_produk.berat+'g</p>':"";
+        let html_warna= data_produk.opsi_warna?'<p class="mb-0"> Warna : '+data_produk.opsi_warna+'</p>':"";
+        let html_ukuran= data_produk.opsi_ukuran?'<p class="mb-0"> Ukuran : '+data_produk.opsi_ukuran+'</p>':"";
+        let html_membership="";
+        if(data_produk.membership){
+          html_membership="<p class='text-success mt-4 mb-0 fw-semibold'>Level Membership : "+data_produk.membership.nama_membership+"</p>"+data_produk.membership.teks_membership;
+        }
+        html_keranjang+=`
+        <div class="d-flex mt-4 mb-4 p-3 align-items-center shadow rounded-2 border border-1">
+        <div class="flex-shrink-0">
+        <img src="`+data_produk.url_gambar_barang+`" class="img-fluid ms-1" style="width:90px" >
+        </div>
+        <div class="flex-shrink-1">
+        <div class="d-flex flex-column ms-4" style="font-size:10pt">
+        <span class="text-primary">
+        <b>`+data_produk.nama_barang+`</b>
+        </span>
+        <div>
+        <p class="mb-2">Qty : `+data_produk.jumlah_barang+`</p>
+        `+html_berat+`
+        `+html_warna+`
+        `+html_ukuran+`
+        <p class="mb-2">catatan : <b>`+data_produk.catatan+`</b></p>
+        <p class="mb-1">sub total : <b>`+formatRupiah(data_produk.harga_barang*data_produk.jumlah_barang)+`</b></p>
+        `+html_membership+`
+        </div>
+
+        </div>
+        </div>
+
+
+        </div>`;
+      });
+      html_keranjang+=`
+      </div>
+
+      <div class="col-md-4 col-lg-4 col-12 mt-4 mt-md-0" style="border-left:2px solid {{warna_utama}}">
+      <label>Pilih Ongkos Kirim</label>
+      <select class="form-control class_ongkir" name="`+data_keranjang.id_select_keranjang+`">
+      `;
+
+      data_keranjang.data_ongkir.forEach((data_ongkir) => {
+
+        // if(data_ongkir.code=="digital"){
+        //   let data_membership="";
+        //   if(data_ongkir.daftar_ongkir[0].membership!=null){
+        //     data_membership="data-membership='"+JSON.stringify(data_ongkir.daftar_ongkir[0].membership)+"'";
+        //   }
+        //
+        //   html_keranjang+=`<option value=`+data_ongkir.daftar_ongkir[0].id_select_ongkir+` data-jumlah_ongkir="0" `+data_membership+`>Produk Digital - Rp0</option>`;
+        //
+        // }else
+        if(data_ongkir.daftar_ongkir.length>0){
+          data_ongkir.daftar_ongkir.forEach((list_ongkir) => {
+            if("value" in list_ongkir.cost){
+              let data_membership="";
+              if(list_ongkir.membership!=null){
+                data_membership="data-membership='"+JSON.stringify(list_ongkir.membership)+"'";
+              }
+              let nama_ongkir="";
+              if(data_ongkir.code=="digital"){
+                nama_ongkir="Produk Digital";
+              }else{
+                nama_ongkir=data_ongkir.code+` `+list_ongkir.service;
+              }
+              html_keranjang+=`<option value=`+list_ongkir.id_select_ongkir+` data-jumlah_ongkir=`+list_ongkir.cost.value+` `+data_membership+`>`+nama_ongkir+` - `+formatRupiah(list_ongkir.cost.value)+`</option>`;
+            }
+
+          });
+
+        }
+
+      });
+
+      html_keranjang+=`
+      </select>
+
+      <p class="text-orange mt-2" id="membership_ongkir_`+data_keranjang.id_select_keranjang+`" style='font-size:10pt'></p>
+
+      </div>
+
+      </div>
+
+      </div>
+      </div>`;
+      $('#keranjang_belannja').append(html_keranjang);
+    }
+
+    function refreshPerhitungan() {
+      let total_produk=hitungTotalProduk();
+      let total_ongkir=hitungTotalOngkir();
+      let totalpotongan=getTotalPotongan();
+      let TOTAL=(total_produk+total_ongkir)-totalpotongan;
+      $('#totalproduk').text("Total Pesanan : "+formatRupiah(total_produk));
+      $('#totalongkir').text("Total Ongkir : "+formatRupiah(total_ongkir));
+      $('#totalbayar').html('Total Bayar : <b class="fw-bolder">'+formatRupiah(TOTAL)+'</b>');
+      if(totalpotongan>0){
+        $('#totalpotongan').text("Total Potongan Voucher : -"+formatRupiah(totalpotongan));
+      }
+      if(TOTAL>json_transaksi.saldo){
+        $('#metode-saldo').prop('disabled', true).prop('checked', false);
+        $('#class_metode_bayar').html("<p class='mt-4 text-center text-warning-emphasis fw-semibold'>Saldo tidak cukup</p>");
+        $('#metode-rekening').prop('checked', true);
+      }
+
+
+    }
+
+
+    function hitungTotalProduk() {
+      //Hitung jumlah harga produk keseluruhan
+      let total_belanja=0;
+      json_transaksi.data_transaksi.forEach((keranjang) => {
+        keranjang.data_produk.forEach((produk) => {
+          total_produk=produk.harga_barang*produk.jumlah_barang;
+          if(produk.membership.jumlah_membership){
+              total_produk=total_produk+produk.membership.jumlah_membership;
+          }
+          total_belanja+=total_produk;
+        });
+
+
+      });
+      return total_belanja;
+    }
+
+    function hitungTotalOngkir() {
+      let total_ongkir=0;
+      $('.class_ongkir').each(function(i, obj) {
+        const selected = $(this).find('option:selected');
+        let jumlah_ongkir=selected.data('jumlah_ongkir');
+        if(selected.data('membership')){
+          $('#membership_ongkir_'+$(this).attr("name")).html("<p class='text-success mt-4 mb-0 fw-semibold' >Level Membership : "+selected.data('membership').nama_membership+"</p>"+selected.data('membership').teks_membership);
+          if(selected.data('membership').jumlah_membership){
+              jumlah_ongkir=jumlah_ongkir+Number(selected.data('membership').jumlah_membership);
+          }
+
+        }else{
+          $('#membership_ongkir_'+$(this).attr("name")).html("");
+        }
+        total_ongkir+=jumlah_ongkir;
+      });
+      return total_ongkir;
+    }
+
+    function getTotalPotongan() {
+      if (typeof json_transaksi.voucher == 'object') {
+        if(json_transaksi.voucher.status=="ok" && typeof typeof json_transaksi.voucher.total_potongan != "undefined"){
+          $('#hasilvoucher').html(
+            `<div class="alert alert-success mt-4" role="alert">`+json_transaksi.voucher.pesan+`</div>`
+          );
+          //return total voucher
+          return json_transaksi.voucher.total_potongan;
+        }else if(json_transaksi.voucher.status=="not_found"){
+          $('#hasilvoucher').html(
+            `<div class="alert alert-danger alert-dismissible fade show mt-4" role="alert">`+json_transaksi.voucher.pesan+`
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>`
+          );
+          console.log(json_transaksi.voucher.status);
+        }
+      }
+      //return Rp0 jika tidak ada voucher
+      return 0;
+    }
+
+    </script>

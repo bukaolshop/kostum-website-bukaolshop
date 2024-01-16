@@ -1,0 +1,181 @@
+<section>
+  <div class="container">
+    <div class="row mt-4">
+      <div class="col-12 col-md-4 col-lg-4">
+        <div class="list-group mb-4">
+          <a href="?page=profil" class="list-group-item list-group-item-action active" aria-current="true">
+            Profil
+          </a>
+          <a href="?page=transaksi" class="list-group-item list-group-item-action">Transaksi</a>
+          <a href="?page=alamat" class="list-group-item list-group-item-action">Alamat Saya</a>
+          <a href="?page=favorit" class="list-group-item list-group-item-action">Favorit</a>
+          <a href="?page=logout" class="list-group-item list-group-item-action "><span class="fa fa-power-off"></span>  Logout </a>
+        </div>
+      </div>
+      <div class="col-md-8 col-lg-8 col-12 ">
+
+        <article class="card mb-3">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-12 p-4" id="data_topup">
+
+              </div>
+
+            </div>
+
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BATALKAN Modal -->
+<div class="modal fade" id="batalkanModal" tabindex="-1" aria-labelledby="BatalkanModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="BatalkanModalLabel">Batalkan TopUp</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Jika anda membatalkan topup ini, jangan lakukan pembayaran pada nomor virtual account atau QRIS yang anda dapatkan dari halaman ini lagi.<p>Segala pembayaran yang anda lakukan pada topup yang sudah dibatalkan akan menyebabkan saldo tidak dapat masuk secara otomatis.</p><br>Pastikan anda belum melakukan transaksi atau pembayaran apapun pada sesi topup ini. <p>Apakah anda yakin ingin membatalkan topup ini?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kembali</button>
+        <button type="button" class="btn btn-danger" id="btn_batalkan_topup">Ya, Batalkan TopUp ini</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Konfirmasi Pembayaran Modal -->
+<div class="modal fade" id="konfirmasiModal" tabindex="-1" aria-labelledby="KonfirmasiModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="KonfirmasiModalLabel">Konfirmasi Pembayaran</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+        <form method="post" enctype="multipart/form-data" >
+      <div class="modal-body">
+            <strong for="idinput1" class="form-label">Nama Pengirim</strong>
+            <input id="idinput1" name="input1" required placeholder="Nama pengirim" class="form-control mb-3" style="margin-top:3px">
+
+            <strong for="idinput2" class="form-label ">Foto/Screenshot bukti pembayaran</strong>
+            <input id="idinput2" name="input2" type="file" accept="image/*" required class="form-control mb-4" style="margin-top:3px">
+
+        <p style="text-align=left;">Pastikan anda telah melakukan transfer senilai</p>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Konfirmasi Pembayaran</button>
+      </div>
+        </form>
+    </div>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+$(document).ready(function() {
+  const data_topup={{data_json_topup}};
+  let html_data;
+  if(data_topup.status=="no_data"){
+    html_data=`
+    <form class="form-group mt-2" action="" method="post">
+    <center>
+    <label class="mt-2">Nominal TopUp</label>
+    <input type="number"  class="form-control mt-2" name="jumlah_topup" required="" value="" placeholder="Masukkan jumlah nominal topup">
+    <button type="submit" class="btn btn-primary mt-4 mb-4" >Konfirmasi TopUp</button>
+    </center>
+    </form>`;
+
+  }else if(data_topup.status=="ok"){
+    if(data_topup.override){
+      let total_topup=parseInt(data_topup.jumlah_topup)+parseInt(data_topup.kode_unik);
+      html_data=`<h4>Terimakasih telah melakukan TopUp</h4>
+      <div class="row mt-4 mb-4">
+      <div class="col-12 col-md-6 col-lg-6">
+      <h4>
+      <div class="d-flex m-0 align-items-center">
+      <div class="flex-fill">Total TopUp  : </div>
+      <div class="flex-fill">`+formatRupiah(total_topup)+`</div>
+      </dl>
+      </h4>
+      </div>
+      </div>
+
+      <div class="row">
+      <div class="col-12">
+      <p>Silahkan klik tombol dibawah untuk beralih kehalaman pembayaran</p>
+      <a href="`+data_topup.link_override+`" target="_blank"><button type="button" class="btn btn-primary mt-2 mb-4 btn-lg" name="button">Buka halaman pembayaran</button></a>
+      </div>
+      <div class="col-12">
+      <button type="button" class="btn btn-warning mt-4" name="button" data-bs-toggle="modal" data-bs-target="#batalkanModal">Batalkan TopUp</button>
+      </div>
+      </div>
+      `;
+    }else{
+      let total_topup=parseInt(data_topup.jumlah_topup)+parseInt(data_topup.kode_unik);
+      html_data=`
+
+      <div class="row mt-4 mb-4">
+      <div class="col-12">
+      <h2>Terimakasih telah melakukan topup</h2>
+      <p>Silahkan lakukan pembayaran pada salah satu rekening dibawah. Setelah melakukan pembayaran, lakukan konfirmasi pada tombol dibawah.</p>
+      <br>
+      <h4>
+      <div class="d-flex m-0 align-items-center">
+      <div style="width:250px">Total TopUp  : </div>
+      <div class="flex-fill">`+formatRupiah(total_topup)+`</div>
+      </dl>
+      </h4>
+      </div>
+      </div>
+
+      <div class="row">`;
+
+      data_topup.rekening.forEach((object_rekening) => {
+        html_data+=htmlListRekening(object_rekening);
+      });
+
+      html_data+=`
+      </div>
+
+      <div class="row">
+      <div class="d-grid gap-2">
+      <button type="button" class="btn btn-primary mt-4" name="button" data-bs-toggle="modal" data-bs-target="#konfirmasiModal">Konfirmasi TopUp</button>
+      <button type="button" class="btn btn-warning mt-2" name="button" data-bs-toggle="modal" data-bs-target="#batalkanModal">Batalkan TopUp</button>
+      </div>
+
+      </div>`;
+    }
+
+    $("#btn_batalkan_topup").click(function() {
+      window.location=data_topup.link_batalkan_topup;
+    });
+    console.log(data_topup);
+  }
+  $("#data_topup").html(html_data);
+
+function htmlListRekening(object) {
+  return `  <div class="col-12 m-2">
+    <article class="card card-body">
+    <div class="d-flex flex-row">
+    <div class="p-2">
+    <img src="`+object.logo+`" alt="" class="img-fluid">
+    </div>
+
+    <div class="p-2 flex-fill">
+    <h6 class="title">`+object.nama_bank+`</h6>
+      <b class="text-primary">`+object.nomor_rekening+`</b>
+      </b><br>
+      <small>`+object.atas_nama+`</small>
+    </div>
+    </div>
+    </article>
+    </div>`;
+}
+});
+</script>
