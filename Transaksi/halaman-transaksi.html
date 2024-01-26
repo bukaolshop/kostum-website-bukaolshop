@@ -179,8 +179,13 @@
 
 
       if(json_transaksi.status=="ok" && json_transaksi.data_transaksi.length>0){
-        if("alamat_user" in json_transaksi){
+        if("alamat_user" in json_transaksi && json_transaksi.alamat_user){
           setAlamatUser(json_transaksi.alamat_user);
+        }else{
+            const data_akun={{data_json_akun}};
+            if(data_akun.status=="ok"){
+                $("#nama_penerima").text(data_akun.data.nama_user);
+            }
         }
 
         // Loop Keranjang Belanja
