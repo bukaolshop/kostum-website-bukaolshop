@@ -352,7 +352,7 @@
       json_transaksi.data_transaksi.forEach((keranjang) => {
         keranjang.data_produk.forEach((produk) => {
           total_produk=produk.harga_barang*produk.jumlah_barang;
-          if(produk.membership.jumlah_membership){
+          if(produk.membership && produk.membership.jumlah_membership){
               total_produk=total_produk+produk.membership.jumlah_membership;
           }
           total_belanja+=total_produk;
