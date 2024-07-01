@@ -58,15 +58,16 @@
         <h5 class="modal-title" id="KonfirmasiModalLabel">Konfirmasi Pembayaran</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-        <form method="post" enctype="multipart/form-data" >
+         <form method="post" enctype="multipart/form-data" >
       <div class="modal-body">
             <strong for="idinput1" class="form-label">Nama Pengirim</strong>
-            <input id="idinput1" name="input1" required placeholder="Nama pengirim" class="form-control mb-3" style="margin-top:3px">
-
+            <input id="idinput1" name="nama_pengirim" required placeholder="Nama pengirim" class="form-control mb-3" style="margin-top:3px">
+<strong class="form-label ">Bank Tujuan</strong>
+           <input id="idinput1" name="bank_tujuan" required placeholder="Nama bank tujuan" class="form-control mb-3" style="margin-top:3px">
             <strong for="idinput2" class="form-label ">Foto/Screenshot bukti pembayaran</strong>
-            <input id="idinput2" name="input2" type="file" accept="image/*" required class="form-control mb-4" style="margin-top:3px">
+            <input id="idinput2" name="gambar_bukti" type="file" accept="image/*" required class="form-control mb-4" style="margin-top:3px">
 
-        <p style="text-align=left;">Pastikan anda telah melakukan transfer senilai</p>
+        <p style="text-align=left;">Pastikan anda telah melakukan transfer sesuai nominal total topup.</p>
       </div>
       <div class="modal-footer">
         <button type="submit" class="btn btn-primary">Konfirmasi Pembayaran</button>
