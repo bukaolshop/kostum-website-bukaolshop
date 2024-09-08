@@ -340,7 +340,11 @@
         $('#metode-saldo').prop('disabled', true).prop('checked', false);
         $('#class_metode_bayar').html("<p class='mt-4 text-center text-warning-emphasis fw-semibold'>Saldo tidak cukup</p>");
         $('#metode-rekening').prop('checked', true);
+      }else{
+        $('#metode-saldo').prop('disabled', false);
+        $('#class_metode_bayar').hide()
       }
+
 
 
     }
